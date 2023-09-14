@@ -20,9 +20,39 @@ IMPORTANTE
 
 
 import React from 'react';
+import { getBand } from './actions.js';
 
-const BandDetail = (props) => {
-   return <div></div>;
+const BandDetail = ({ match }) => {
+  const [band, setBand] = React.useState({
+    id: match.params.id,
+    name: '',
+    genre: '',
+    albums: [],
+    members: []
+  });
+
+  React.useEffect(() => {
+    const bandData = getBand(band.id);
+    setBand(bandData);
+  }, [band.id]);
+   return (
+      <div>
+        <h2>{band.name}</h2>
+        <p>Género: {band.genre}</p>
+        <p>Álbumes:</p>
+        <ul>
+          {band.albums.map((album) => (
+            <li key={album.id}>{album.title}</li>
+          ))}
+        </ul>
+        <p>Miembros:</p>
+        <ul>
+          {band.members.map((member) => (
+            <li key={member.id}>{member.name}</li>
+          ))}
+        </ul>
+      </div>
+    );
 };
 
 export default BandDetail;

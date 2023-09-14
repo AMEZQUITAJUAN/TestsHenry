@@ -31,8 +31,37 @@ REQUISITOS:
 */
 
 const rootReducer = (state = initialState, action) => {
-  // eslint-disable-next-line default-case
   switch (action.type) {
+    // Caso default que devuelve el estado global sin cambios
+    default:
+      return state;
+    // Caso que guarda todos los celulares en el estado "celulares"
+    case "SET_CELULARES":
+      return {
+        ...state,
+        celulares: action.payload,
+      };
+    // Caso que guarda el detalle de un celular en el estado "celularDetail"
+    case "SET_CELULAR_DETAIL":
+      return {
+        ...state,
+        celularDetail: action.payload,
+      };
+    // Caso que agrega un nuevo celular en el estado "celulares"
+    case "ADD_CELULAR":
+      return {
+        ...state,
+        celulares: [...state.celulares, action.payload],
+      };
+    // Caso que elimina un celular del estado "celulares" según su ID
+    case "REMOVE_CELULAR":
+      const filteredCelulares = state.celulares.filter(
+        (celular) => celular.id !== action.payload
+      );
+      return {
+        ...state,
+        celulares: filteredCelulares,
+      };
   }
 };
 

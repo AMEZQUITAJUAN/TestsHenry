@@ -20,16 +20,38 @@ IMPORTANTE
 import './home.css';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import BandCard from '../BandCard/BandCard';
+import { fetchBands } from '../../actions/bandActions';
+
 export class Home extends Component {
-   componentDidMount() {}
+   componentDidMount() {
+      this.props.fetchBands();
+   }
 
    render() {
-      return <div className='home'></div>;
+      const { bands } = this.props;
+
+      return (
+         <div className='home'>
+            {bands.map((band) => (
+               <BandCard key={band.id} band={band} />
+            ))}
+         </div>
+      );
    }
 }
 
-export const mapStateToProps = () => {};
+export const mapStateToProps = (state) => {
+   return {
+      bands: state.bandReducer.bands,
+   };
+};
 
-export const mapDispatchToProps = () => {};
+export const mapDispatchToProps = (dispatch) => {
+   return {
+      fetchBands: () => dispatch(fetchBands()),
+   };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
+

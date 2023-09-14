@@ -21,10 +21,62 @@ IMPORTANTE
       - 'React.useEffect'
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 const CreateBand = () => {
-   return <div></div>;
+  const [input, setInput] = useState({ name: '', genre: '', year: '' });
+  const [error, setError] = useState({});
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Aquí despachamos la información del formulario al estado global
+    // utilizando las actions importadas como Object Modules.
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setInput((prevInput) => ({ ...prevInput, [name]: value }));
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={input.name}
+          onChange={handleInputChange}
+        />
+        {error.name && <span>{error.name}</span>}
+      </div>
+      <div>
+        <label htmlFor="genre">Genre:</label>
+        <input
+          type="text"
+          id="genre"
+          name="genre"
+          value={input.genre}
+          onChange={handleInputChange}
+        />
+        {error.genre && <span>{error.genre}</span>}
+      </div>
+      <div>
+        <label htmlFor="year">Year:</label>
+        <input
+          type="number"
+          id="year"
+          name="year"
+          value={input.year}
+          onChange={handleInputChange}
+        />
+        {error.year && <span>{error.year}</span>}
+      </div>
+      <button type="submit">Create Band</button>
+    </form>
+  );
 };
 
 export default CreateBand;
+

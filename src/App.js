@@ -10,8 +10,23 @@ REQUISITOS
 */
 
 import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Nav from "./Nav";
+import Home from "./Home";
+import BandDetail from "./BandDetail";
+import CreateBand from "./CreateBand";
 
 const App = () => {
-   return <div> </div>;
+  return (
+    <Router>
+      <div>
+        <Nav />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/band/create" component={CreateBand} />
+        <Route exact path="/band/:id" component={BandDetail} />
+      </div>
+    </Router>
+  );
 };
+
 export default App;
